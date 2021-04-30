@@ -1,0 +1,79 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MovieCatalogue" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="SplashScreen" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="AppLogo" >
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">150dp</item>
+    </style>
+    <style name="CataloguePoster">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <style name="DetailPoster">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">300dp</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <style name="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="Text.AppName">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="Text.Title.Catalogue">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Text.Title.Detail">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="Text.Header">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Text.Description">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Text.Description.Center">
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="RecyclerView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+    </style>
+    <style name="CustomCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="CustomCardView.Catalogue">
+        <item name="android:layout_margin">4dp</item>
+        <item name="cardCornerRadius">4dp</item>
+    </style>
+    <style name="CustomCardView.Detail">
+        <item name="android:layout_margin">16dp</item>
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+</resources>
