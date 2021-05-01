@@ -1,5 +1,6 @@
 package com.setiaki.moviecatalogue.ui.catalogue
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,19 +14,21 @@ import javax.inject.Inject
 @HiltViewModel
 class CatalogueViewModel @Inject constructor(private val catalogueRepository: CatalogueRepository) :
     ViewModel() {
-    val topRatedMovies = MutableLiveData<List<MovieDetailResponse>>()
+    private val _topRatedMovies = MutableLiveData<List<MovieDetailResponse>>()
+    val topRatedMovies: LiveData<List<MovieDetailResponse>> = _topRatedMovies
 
-    val topRatedTvShows = MutableLiveData<List<TvShowDetailResponse>>()
+    private val _topRatedTvShows = MutableLiveData<List<TvShowDetailResponse>>()
+    val topRatedTvShows: LiveData<List<TvShowDetailResponse>> = _topRatedTvShows
 
     fun getTopRatedMovies() {
         viewModelScope.launch {
-            topRatedMovies.value = catalogueRepository.getTopRatedMovies()
+            _topRatedMovies.value = catalogueRepository.getTopRatedMovies()
         }
     }
 
     fun getTopRatedTvShows() {
         viewModelScope.launch {
-            topRatedTvShows.value = catalogueRepository.getTopRatedTVShows()
+            _topRatedTvShows.value = catalogueRepository.getTopRatedTVShows()
         }
     }
 }

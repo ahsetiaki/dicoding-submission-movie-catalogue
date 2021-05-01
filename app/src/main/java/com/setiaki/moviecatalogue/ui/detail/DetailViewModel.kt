@@ -1,5 +1,6 @@
 package com.setiaki.moviecatalogue.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,19 +15,21 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val detailRepository: DetailRepository) :
     ViewModel() {
-    val movieDetail = MutableLiveData<MovieDetailResponse>()
+    private val _movieDetail = MutableLiveData<MovieDetailResponse>()
+    val movieDetail: LiveData<MovieDetailResponse> = _movieDetail
 
-    val tvShowDetail = MutableLiveData<TvShowDetailResponse>()
+    private val _tvShowDetail = MutableLiveData<TvShowDetailResponse>()
+    val tvShowDetail: LiveData<TvShowDetailResponse> = _tvShowDetail
 
     fun getMovieDetail(itemId: Int) {
         viewModelScope.launch {
-            movieDetail.value = detailRepository.getMovieDetail(itemId)
+            _movieDetail.value = detailRepository.getMovieDetail(itemId)
         }
     }
 
     fun getTvShowDetail(itemId: Int) {
         viewModelScope.launch {
-            tvShowDetail.value = detailRepository.getTVShowDetail(itemId)
+            _tvShowDetail.value = detailRepository.getTVShowDetail(itemId)
         }
     }
 
