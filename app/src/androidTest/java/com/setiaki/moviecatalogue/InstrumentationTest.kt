@@ -10,17 +10,25 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.setiaki.moviecatalogue.ui.home.HomeActivity
 import com.setiaki.moviecatalogue.util.EspressoIdlingResource
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+
+@HiltAndroidTest
 class InstrumentationTest {
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     var homeActivityRule = ActivityScenarioRule(HomeActivity::class.java)
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
     }
 

@@ -1,17 +1,20 @@
-package com.setiaki.moviecatalogue.repository
+package com.setiaki.moviecatalogue.data.repository
 
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
+
 class DetailRepositoryTest {
     private lateinit var detailRepository: DetailRepository
 
     @Before
     fun setUp() {
-        detailRepository = DetailRepository()
+        val webservice = TMDBWebservice.create()
+        detailRepository = DetailRepository(webservice)
     }
 
     @Test

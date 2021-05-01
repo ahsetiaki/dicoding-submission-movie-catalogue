@@ -1,12 +1,12 @@
-package com.setiaki.moviecatalogue.ui.tvshow
+package com.setiaki.moviecatalogue.ui.catalogue.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.setiaki.moviecatalogue.api.TMDBWebservice
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
 import com.setiaki.moviecatalogue.databinding.ItemCatalogueBinding
-import com.setiaki.moviecatalogue.response.TvShowDetailResponse
+import com.setiaki.moviecatalogue.data.remote.response.TvShowDetailResponse
 import com.setiaki.moviecatalogue.ui.catalogue.CatalogueOnClickListener
 
 class TvShowAdapter internal constructor(private val listener: CatalogueOnClickListener) :
@@ -22,13 +22,13 @@ class TvShowAdapter internal constructor(private val listener: CatalogueOnClickL
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TvShowAdapter.TVShowViewHolder {
+    ): TVShowViewHolder {
         val binding =
             ItemCatalogueBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TVShowViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TvShowAdapter.TVShowViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TVShowViewHolder, position: Int) {
         val tvShowItem = tvShowList[position]
         holder.bind(tvShowItem)
     }

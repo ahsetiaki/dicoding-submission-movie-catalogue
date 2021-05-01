@@ -2,9 +2,11 @@ package com.setiaki.moviecatalogue.ui.catalogue
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.setiaki.moviecatalogue.CoroutinesTestRule
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
+import com.setiaki.moviecatalogue.data.remote.response.MovieDetailResponse
+import com.setiaki.moviecatalogue.data.remote.response.TvShowDetailResponse
+import com.setiaki.moviecatalogue.data.repository.CatalogueRepository
 import com.setiaki.moviecatalogue.getOrAwaitValue
-import com.setiaki.moviecatalogue.response.MovieDetailResponse
-import com.setiaki.moviecatalogue.response.TvShowDetailResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertTrue
@@ -13,17 +15,20 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CatalogueViewModelTest {
-    private val catalogueViewModel by lazy { CatalogueViewModel() }
+    //    private val catalogueViewModel by lazy { CatalogueViewModel() }
+    private val webservice = TMDBWebservice.create()
+    private val catalogueRepository = CatalogueRepository(webservice)
+    private val catalogueViewModel by lazy { CatalogueViewModel(catalogueRepository) }
 
     @get:Rule
-    var coroutineTestRule = CoroutinesTestRule()
+    var coroutinesTestRule = CoroutinesTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Test
     fun testGetTopRatedMovies() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
+        coroutinesTestRule.testDispatcher.runBlockingTest {
             catalogueViewModel.getTopRatedMovies()
             catalogueViewModel.topRatedMovies.observeForever { }
             val liveDataValue =
@@ -37,7 +42,7 @@ class CatalogueViewModelTest {
 
     @Test
     fun testGetTopRatedTvShows() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
+        coroutinesTestRule.testDispatcher.runBlockingTest {
             catalogueViewModel.getTopRatedTvShows()
             catalogueViewModel.topRatedTvShows.observeForever { }
             val liveDataValue =

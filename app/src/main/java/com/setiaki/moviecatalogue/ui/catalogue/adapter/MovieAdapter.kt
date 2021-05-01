@@ -1,12 +1,12 @@
-package com.setiaki.moviecatalogue.ui.movie
+package com.setiaki.moviecatalogue.ui.catalogue.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.setiaki.moviecatalogue.api.TMDBWebservice
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
 import com.setiaki.moviecatalogue.databinding.ItemCatalogueBinding
-import com.setiaki.moviecatalogue.response.MovieDetailResponse
+import com.setiaki.moviecatalogue.data.remote.response.MovieDetailResponse
 import com.setiaki.moviecatalogue.ui.catalogue.CatalogueOnClickListener
 
 class MovieAdapter internal constructor(private val listener: CatalogueOnClickListener) :

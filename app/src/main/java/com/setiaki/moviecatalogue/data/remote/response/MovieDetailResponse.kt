@@ -1,12 +1,13 @@
-package com.setiaki.moviecatalogue.response
+package com.setiaki.moviecatalogue.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowDetailResponse(
+
+data class MovieDetailResponse(
     @field:SerializedName("id")
     val id: Int = 0,
 
-    @field:SerializedName("name")
+    @field:SerializedName("title")
     val title: String = "",
 
     @field:SerializedName("poster_path")
@@ -18,7 +19,7 @@ data class TvShowDetailResponse(
     @field:SerializedName("genres")
     val genres: List<Genre> = arrayListOf<Genre>(),
 
-    @field:SerializedName("first_air_date")
+    @field:SerializedName("release_date")
     val releaseDate: String = "",
 
     @field:SerializedName("vote_average")

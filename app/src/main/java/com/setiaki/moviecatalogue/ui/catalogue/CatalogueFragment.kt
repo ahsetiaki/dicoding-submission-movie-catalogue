@@ -2,25 +2,25 @@ package com.setiaki.moviecatalogue.ui.catalogue
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.setiaki.moviecatalogue.databinding.FragmentCatalogueBinding
+import com.setiaki.moviecatalogue.ui.catalogue.adapter.MovieAdapter
+import com.setiaki.moviecatalogue.ui.catalogue.adapter.TvShowAdapter
 import com.setiaki.moviecatalogue.ui.detail.DetailActivity
-import com.setiaki.moviecatalogue.ui.movie.MovieAdapter
-import com.setiaki.moviecatalogue.ui.tvshow.TvShowAdapter
 import com.setiaki.moviecatalogue.util.EspressoIdlingResource
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CatalogueFragment : Fragment(), CatalogueOnClickListener {
     private var _binding: FragmentCatalogueBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding as FragmentCatalogueBinding
 
-    private val catalogueViewModel: CatalogueViewModel by activityViewModels()
+    private val catalogueViewModel: CatalogueViewModel by viewModels()
 
     private var type: String? = ""
 
@@ -74,7 +74,7 @@ class CatalogueFragment : Fragment(), CatalogueOnClickListener {
 
             catalogueViewModel.topRatedMovies.observe(viewLifecycleOwner, { movieList ->
                 (binding.rvCatalogue.adapter as MovieAdapter).setMovieList(ArrayList(movieList))
-                if(!EspressoIdlingResource.idlingResource.isIdleNow) EspressoIdlingResource.decrement()
+                if (!EspressoIdlingResource.idlingResource.isIdleNow) EspressoIdlingResource.decrement()
 
             })
         } else {
@@ -83,7 +83,7 @@ class CatalogueFragment : Fragment(), CatalogueOnClickListener {
 
             catalogueViewModel.topRatedTvShows.observe(viewLifecycleOwner, { tvShowList ->
                 (binding.rvCatalogue.adapter as TvShowAdapter).setTVShowList(ArrayList(tvShowList))
-                if(!EspressoIdlingResource.idlingResource.isIdleNow) EspressoIdlingResource.decrement()
+                if (!EspressoIdlingResource.idlingResource.isIdleNow) EspressoIdlingResource.decrement()
             })
         }
 

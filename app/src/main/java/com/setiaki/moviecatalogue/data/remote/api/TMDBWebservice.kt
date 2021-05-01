@@ -1,10 +1,13 @@
-package com.setiaki.moviecatalogue.api
+package com.setiaki.moviecatalogue.data.remote.api
 
 import com.setiaki.moviecatalogue.BuildConfig
-import com.setiaki.moviecatalogue.response.MovieDetailResponse
-import com.setiaki.moviecatalogue.response.MovieTopRatedResponse
-import com.setiaki.moviecatalogue.response.TvShowDetailResponse
-import com.setiaki.moviecatalogue.response.TvShowTopRatedResponse
+import com.setiaki.moviecatalogue.data.remote.response.MovieDetailResponse
+import com.setiaki.moviecatalogue.data.remote.response.MovieTopRatedResponse
+import com.setiaki.moviecatalogue.data.remote.response.TvShowDetailResponse
+import com.setiaki.moviecatalogue.data.remote.response.TvShowTopRatedResponse
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -44,8 +47,15 @@ interface TMDBWebservice {
         const val IMAGE_URL = "https://image.tmdb.org/t/p/original/"
 
         fun create(): TMDBWebservice {
+            val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logger)
+                .build()
+
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(TMDBWebservice::class.java)

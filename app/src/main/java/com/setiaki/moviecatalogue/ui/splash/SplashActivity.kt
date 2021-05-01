@@ -7,7 +7,9 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.setiaki.moviecatalogue.databinding.ActivitySplashBinding
 import com.setiaki.moviecatalogue.ui.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 

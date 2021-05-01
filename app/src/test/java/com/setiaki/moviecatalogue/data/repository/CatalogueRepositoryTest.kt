@@ -1,16 +1,19 @@
-package com.setiaki.moviecatalogue.repository
+package com.setiaki.moviecatalogue.data.repository
 
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+
 
 class CatalogueRepositoryTest {
     private lateinit var catalogueRepository: CatalogueRepository
 
     @Before
     fun setUp() {
-        catalogueRepository = CatalogueRepository()
+        val webservice = TMDBWebservice.create()
+        catalogueRepository = CatalogueRepository(webservice)
     }
 
     @Test
@@ -18,8 +21,8 @@ class CatalogueRepositoryTest {
         runBlocking {
             val defaultLimit = 20 // Sesuai TMDB API default limit
             val apiResponse = catalogueRepository.getTopRatedMovies()
-            assertTrue(!apiResponse.results.isNullOrEmpty())
-            assertTrue(apiResponse.results.size == defaultLimit)
+            assertTrue(!apiResponse.isNullOrEmpty())
+            assertTrue(apiResponse.size == defaultLimit)
         }
     }
 
@@ -28,8 +31,8 @@ class CatalogueRepositoryTest {
         runBlocking {
             val defaultLimit = 20 // Sesuai TMDB API default limit
             val apiResponse = catalogueRepository.getTopRatedTVShows()
-            assertTrue(!apiResponse.results.isNullOrEmpty())
-            assertTrue(apiResponse.results.size == defaultLimit)
+            assertTrue(!apiResponse.isNullOrEmpty())
+            assertTrue(apiResponse.size == defaultLimit)
         }
     }
 }

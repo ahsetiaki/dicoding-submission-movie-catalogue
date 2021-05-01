@@ -4,17 +4,18 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.setiaki.moviecatalogue.api.TMDBWebservice
+import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
 import com.setiaki.moviecatalogue.databinding.ActivityDetailBinding
-import com.setiaki.moviecatalogue.response.Genre
+import com.setiaki.moviecatalogue.data.remote.response.Genre
 import com.setiaki.moviecatalogue.ui.catalogue.CatalogueFragment
 import com.setiaki.moviecatalogue.util.EspressoIdlingResource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
