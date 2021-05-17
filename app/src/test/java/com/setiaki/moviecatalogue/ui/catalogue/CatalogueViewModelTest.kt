@@ -1,58 +1,50 @@
 package com.setiaki.moviecatalogue.ui.catalogue
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.setiaki.moviecatalogue.CoroutinesTestRule
-import com.setiaki.moviecatalogue.data.remote.api.TMDBWebservice
-import com.setiaki.moviecatalogue.data.remote.response.MovieDetailResponse
-import com.setiaki.moviecatalogue.data.remote.response.TvShowDetailResponse
+import androidx.paging.PagingData
+import com.setiaki.moviecatalogue.CoroutineTestRule
 import com.setiaki.moviecatalogue.data.repository.CatalogueRepository
+import com.setiaki.moviecatalogue.DummyData
 import com.setiaki.moviecatalogue.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class CatalogueViewModelTest {
-    //    private val catalogueViewModel by lazy { CatalogueViewModel() }
-    private val webservice = TMDBWebservice.create()
-    private val catalogueRepository = CatalogueRepository(webservice)
-    private val catalogueViewModel by lazy { CatalogueViewModel(catalogueRepository) }
 
     @get:Rule
-    var coroutinesTestRule = CoroutinesTestRule()
+    var coroutinesTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    @Test
-    fun testGetTopRatedMovies() {
-        coroutinesTestRule.testDispatcher.runBlockingTest {
-            catalogueViewModel.getTopRatedMovies()
-            catalogueViewModel.topRatedMovies.observeForever { }
-            val liveDataValue =
-                catalogueViewModel.topRatedMovies.getOrAwaitValue() as List<MovieDetailResponse>
+    private val catalogueRepository = mock(CatalogueRepository::class.java)
+    private val catalogueViewModel by lazy { CatalogueViewModel(catalogueRepository) }
 
-            val defaultLimit = 20 // Sesuai TMDB API default limit
-            assertTrue(!liveDataValue.isNullOrEmpty())
-            assertTrue(liveDataValue.size == defaultLimit)
-        }
+    @Test
+    fun testGetTopRatedMovies() = coroutinesTestRule.testDispatcher.runBlockingTest {
+        val flowDummyData = flowOf(PagingData.from(DummyData.getTopRatedMoviesEntity()))
+        whenever(catalogueRepository.getTopRatedMovies()).thenReturn(flowDummyData)
+
+        val result = catalogueViewModel.getTopRatedMovies().getOrAwaitValue()
+
+        assertNotNull(result)
     }
 
     @Test
-    fun testGetTopRatedTvShows() {
-        coroutinesTestRule.testDispatcher.runBlockingTest {
-            catalogueViewModel.getTopRatedTvShows()
-            catalogueViewModel.topRatedTvShows.observeForever { }
-            val liveDataValue =
-                catalogueViewModel.topRatedTvShows.getOrAwaitValue() as List<TvShowDetailResponse>
+    fun testGetTopRatedTvShows() = coroutinesTestRule.testDispatcher.runBlockingTest {
+        val flowDummyData = flowOf(PagingData.from(DummyData.getTopRatedTvShowsEntity()))
+        whenever(catalogueRepository.getTopRatedTVShows()).thenReturn(flowDummyData)
 
-            val defaultLimit = 20 // Sesuai TMDB API default limit
-            assertTrue(!liveDataValue.isNullOrEmpty())
-            assertTrue(liveDataValue.size == defaultLimit)
-        }
+        val result = catalogueViewModel.getTopRatedTvShows().getOrAwaitValue()
+
+        assertNotNull(result)
     }
-
 
 }

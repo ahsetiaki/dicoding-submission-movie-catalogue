@@ -2,7 +2,7 @@ package com.setiaki.moviecatalogue.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowDetailResponse(
+data class TvShowResponse(
     @field:SerializedName("id")
     val id: Int = 0,
 
@@ -16,7 +16,7 @@ data class TvShowDetailResponse(
     val overview: String = "",
 
     @field:SerializedName("genres")
-    val genres: List<Genre> = arrayListOf<Genre>(),
+    val genres: List<GenreResponse> = arrayListOf<GenreResponse>(),
 
     @field:SerializedName("first_air_date")
     val releaseDate: String = "",

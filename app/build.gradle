@@ -16,6 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.setiaki.moviecatalogue.HiltTestRunner"
+//        testInstrumentationRunnerArguments clearPackageData: 'true'
         buildConfigField("String", "TMDB_API_KEY", '"65be7b50e36942be7ea761adfb73b951"')
     }
 
@@ -31,15 +32,23 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
     buildFeatures {
         viewBinding true
+    }
+
+    testOptions {
+        animationsDisabled = true
+//        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 }
 
 dependencies {
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // core
     implementation "androidx.core:core-ktx:$coreVersion"
 
     // ui
@@ -62,25 +71,42 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    // room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
+
     // dependency injection
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
     // testing
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "androidx.test:core:$androidXTestCoreVersion"
     testImplementation "android.arch.core:core-testing:$archTestingVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$ktxCoroutinesTestVersion"
     testImplementation group: "org.mockito", name: "mockito-core", version: "$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
     testImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
-    kaptTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    testImplementation "app.cash.turbine:turbine:$turbineVersion"
+
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitExtVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test:core:$androidXTestCoreVersion"
     androidTestImplementation "androidx.test:runner:$androidTestVersion"
     androidTestImplementation "androidx.test:rules:$androidTestVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
+    androidTestUtil "androidx.test:orchestrator:$androidTestVersion"
+
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+//    androidTestUtil "androidx.test:orchestrator:$androidTestVersion"
 }

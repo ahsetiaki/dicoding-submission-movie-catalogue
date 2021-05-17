@@ -3,6 +3,7 @@
     <string name="movie_logo">Movie Logo</string>
     <string name="poster">Poster</string>
     <string name="top_rated">Top Rated</string>
+    <string name="favorite">Favorite</string>
     <string name="movie">Movie</string>
     <string name="tv_show">TV Show</string>
     <string name="overview">Overview</string>

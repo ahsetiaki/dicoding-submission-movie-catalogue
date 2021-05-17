@@ -1,12 +1,13 @@
 package com.setiaki.moviecatalogue.ui.detail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.setiaki.moviecatalogue.data.remote.response.MovieDetailResponse
-import com.setiaki.moviecatalogue.data.remote.response.TvShowDetailResponse
+import com.setiaki.moviecatalogue.data.local.entity.MovieWithGenre
+import com.setiaki.moviecatalogue.data.local.entity.TvShowWithGenre
 import com.setiaki.moviecatalogue.data.repository.DetailRepository
+import com.setiaki.moviecatalogue.data.util.networkbound.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,21 +16,25 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val detailRepository: DetailRepository) :
     ViewModel() {
-    private val _movieDetail = MutableLiveData<MovieDetailResponse>()
-    val movieDetail: LiveData<MovieDetailResponse> = _movieDetail
 
-    private val _tvShowDetail = MutableLiveData<TvShowDetailResponse>()
-    val tvShowDetail: LiveData<TvShowDetailResponse> = _tvShowDetail
-
-    fun getMovieDetail(itemId: Int) {
-        viewModelScope.launch {
-            _movieDetail.value = detailRepository.getMovieDetail(itemId)
-        }
+    fun getMovieDetail(itemId: Int): LiveData<Resource<MovieWithGenre>> {
+        return detailRepository.getMovieDetail(itemId).asLiveData()
     }
 
-    fun getTvShowDetail(itemId: Int) {
+    fun getTvShowDetail(itemId: Int): LiveData<Resource<TvShowWithGenre>> {
+        return detailRepository.getTVShowDetail(itemId).asLiveData()
+    }
+
+    fun toggleMovieFavoriteStatus(itemId: Int) {
         viewModelScope.launch {
-            _tvShowDetail.value = detailRepository.getTVShowDetail(itemId)
+            detailRepository.toggleMovieDetailFavoriteStatus(itemId)
+        }
+
+    }
+
+    fun toggleTvShowFavoriteStatus(itemId: Int) {
+        viewModelScope.launch {
+            detailRepository.toggleTvShowDetailFavoriteStatus(itemId)
         }
     }
 

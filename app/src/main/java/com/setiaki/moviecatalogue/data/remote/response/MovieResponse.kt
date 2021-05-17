@@ -3,7 +3,7 @@ package com.setiaki.moviecatalogue.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 
-data class MovieDetailResponse(
+data class MovieResponse(
     @field:SerializedName("id")
     val id: Int = 0,
 
@@ -17,7 +17,7 @@ data class MovieDetailResponse(
     val overview: String = "",
 
     @field:SerializedName("genres")
-    val genres: List<Genre> = arrayListOf<Genre>(),
+    val genres: List<GenreResponse> = arrayListOf<GenreResponse>(),
 
     @field:SerializedName("release_date")
     val releaseDate: String = "",

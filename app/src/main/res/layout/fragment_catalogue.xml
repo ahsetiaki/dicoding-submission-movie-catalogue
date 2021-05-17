@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_catalogue"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.catalogue.CatalogueFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:minHeight="1000dp"
         tools:listitem="@layout/item_catalogue"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
